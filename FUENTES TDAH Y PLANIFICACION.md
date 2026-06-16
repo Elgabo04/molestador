@@ -207,7 +207,7 @@ Descripción del sistema: El usuario mediante una aplicación móvil/web, inicia
 Flujo de la app movil
 
 1. Pantalla con boton para autenticarse con google
-2. Dashboard con navegaciones para añadir tareas y visualizar el historial y otro donde pueda hacer click para escanear un QR para vincular el dispositivo
+2. Dashboard con navegaciones para añadir tareas y visualizar el historial;boton al principio si no se tiene vinculado un dispositivo donde pueda hacer click para escanear un QR para vincular el dispositivo, luego de esto desaparece
 3. Dentro del dashboard con navegaciones, tambien aparece el nombre y boton para cerrar sesión.
 
 
@@ -219,6 +219,8 @@ Una vez escaneado un qr se enlaza el codigo en la base de datos a los registros 
 No se pueden eliminar tareas creadas
 
 Se pueden postergar tareas libremente (no solo 1 hora como en el dispositivo)
+
+En la app, una tarea realizada desaparece de la sección tareas, pero se muestra en el historial como "realizado"
 
 
 
@@ -244,15 +246,48 @@ Ambas apps tienen indicador de conexión al dispositivo y notificaciones de venc
 
 Paleta de colores:
 
-Rojo: FC3D03 (para indicadores de tareas vencidas) 
+Rojo: FC3D03 (para indicadores de tareas vencidas)
 
-Verde: 5DD62C (puede variar la intensidad para comodidad visual) (para editar, añadir y guardar tareas) 
+Verde: 5DD62C (puede variar la intensidad para comodidad visual) (para editar, añadir y guardar tareas)
 
 Amarillo: F6F637 -> complemento azul si es que se requiere (poquisimo uso): 3737F6  (tareas próximas a vencer el amarillo) (azul para aviso de numero de veces de tareas postergadas)
 
 Gris: E4E9FB (fondo)
 
-cancelaciones es solo texto con gran área de pulsación pero sin fondo que compita con otros botones. 
+cancelaciones es solo texto con gran área de pulsación pero sin fondo que compita con otros botones.
 
 Rojo para indicadores de notificaciones de tareas vencidas
+
+
+
+
+
+
+
+
+
+Tecnologías para:
+
+
+
+backend (API):
+
+* Express
+* Node.js
+
+FrontEnd:
+
+* React
+* Axios
+* Tailwind.css
+* recharts
+
+Gráficos a mostrar
+
+* Gráfico de barras de cumplidas vs postergadas
+* Gráfico de pastel circular para mostrar proporción de tareas realizadas, en progreso y postergados
+
+Google auth para sesiones y base de datos supabase
+
+
 

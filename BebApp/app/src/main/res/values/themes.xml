@@ -1,16 +1,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Theme.BebApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_700</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+    <style name="Theme.BebApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/beb_verde</item>
+        <item name="colorPrimaryVariant">@color/beb_verde_oscuro</item>
+        <item name="colorOnPrimary">@color/beb_blanco</item>
+        <item name="colorSecondary">@color/beb_azul</item>
+        <item name="colorOnSecondary">@color/beb_blanco</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:navigationBarColor">@color/beb_blanco</item>
+        <item name="android:statusBarColor">@color/beb_fondo</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 </resources>

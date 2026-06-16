@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Vincular dispositivo"
+        android:textColor="@color/beb_texto_principal"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtEstadoCamara"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Acepta el permiso de camara para escanear el QR."
+        android:textColor="@color/beb_texto_secundario"
+        android:textSize="14sp" />
+
+    <FrameLayout
+        android:id="@+id/marcoCamara"
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        android:layout_marginTop="14dp"
+        android:background="@color/beb_texto_principal"
+        android:padding="10dp">
+
+        <FrameLayout
+            android:id="@+id/contenedorEscanerQr"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Camara QR"
+                android:textColor="@color/beb_blanco"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </FrameLayout>
+    </FrameLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnCancelarVinculacion"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_gravity="end"
+        android:layout_marginTop="14dp"
+        android:text="Cancelar"
+        android:textAllCaps="false"
+        android:textColor="@color/beb_texto_secundario"
+        app:backgroundTint="@android:color/transparent"
+        app:elevation="0dp" />
+</LinearLayout>
