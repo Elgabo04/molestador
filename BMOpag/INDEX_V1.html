@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BMO Assistant - Zen Flow</title>
+
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Hanken+Grotesk:wght@600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon.svg">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#2563eb">
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+<style>
+body{font-family:Inter,sans-serif;background:#f7f9fb}
+.glass-card{
+background:rgba(255,255,255,.45);
+backdrop-filter:blur(12px);
+border:1px solid rgba(195,198,215,.5);
+}
+.pixel-monitor{
+background:linear-gradient(145deg,#191c1e,#2d3133);
+box-shadow:inset 0 2px 10px rgba(0,0,0,.5),0 20px 40px rgba(0,0,0,.2);
+}
+.bmo-face-pulse{
+animation:pulse 4s infinite;
+}
+@keyframes pulse{
+0%,100%{opacity:1;filter:drop-shadow(0 0 5px #6ffbbe)}
+50%{opacity:.8;filter:drop-shadow(0 0 15px #6ffbbe)}
+}
+.scanline{
+width:100%;height:2px;background:rgba(111,251,190,.1);
+position:absolute;animation:scan 3s linear infinite;
+}
+@keyframes scan{0%{top:0}100%{top:100%}}
+</style>
+</head>
+
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("./sw.js")
+    .then(() => console.log("SW registrado"))
+    .catch(err => console.error(err));
+}
+</script>
+
+<body class="text-slate-900">
+
+<main class="min-h-screen py-10 px-6 max-w-7xl mx-auto">
+
+<section class="w-full flex flex-col items-center mb-16">
+
+<div class="relative w-full aspect-[4/3] max-w-md pixel-monitor rounded-[2.5rem] p-8 border-4 border-slate-700 flex items-center justify-center overflow-hidden">
+
+<div class="scanline"></div>
+
+<div class="flex flex-col items-center bmo-face-pulse">
+
+<div class="flex gap-12 mb-6">
+<div class="w-6 h-6 bg-emerald-300 rounded-full"></div>
+<div class="w-6 h-6 bg-emerald-300 rounded-full"></div>
+</div>
+
+<div id="bmoMouth" class="w-24 h-4 bg-emerald-300 rounded-full"></div>
+
+</div>
+</div>
+
+<div class="mt-8 text-center">
+
+<p class="uppercase tracking-widest text-blue-700 text-xs mb-2">
+Estado Actual
+</p>
+
+<h2 id="statusText" class="text-4xl font-bold">
+Esperando instrucciones
+</h2>
+
+<p class="text-slate-500 mt-4 max-w-md">
+BMO está listo para ayudarte.
+</p>
+
+<div id="statusBox" class="hidden"></div>
+
+</div>
+
+</section>
+
+<section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+
+<button id="btnEstudio" class="group p-8 glass-card rounded-3xl text-left transition hover:shadow-xl hover:-translate-y-1">
+
+<div class="w-14 h-14 rounded-xl bg-blue-600 flex items-center justify-center text-white mb-4">
+⏱
+</div>
+
+<h3 class="text-2xl font-bold text-blue-700">
+Iniciar Estudio
+</h3>
+
+<p class="text-slate-500 mt-2">
+Activa la sesión de estudio.
+</p>
+
+</button>
+
+<button id="btnGym" class="group p-8 glass-card rounded-3xl text-left transition hover:shadow-xl hover:-translate-y-1">
+
+<div class="w-14 h-14 rounded-xl bg-emerald-600 flex items-center justify-center text-white mb-4">
+◆
+</div>
+
+<h3 class="text-2xl font-bold text-emerald-700">
+Preparar Gym
+</h3>
+
+<p class="text-slate-500 mt-2">
+Activa la rutina física.
+</p>
+
+</button>
+
+<button id="btnReset" class="group p-8 glass-card rounded-3xl text-left transition hover:shadow-xl hover:-translate-y-1">
+
+<div class="w-14 h-14 rounded-xl bg-slate-200 flex items-center justify-center mb-4">
+↺
+</div>
+
+<h3 class="text-2xl font-bold">
+Resetear Tareas
+</h3>
+
+<p class="text-slate-500 mt-2">
+Limpia el estado actual.
+</p>
+
+</button>
+
+</section>
+
+<section class="glass-card rounded-[2rem] p-8">
+
+<h3 class="text-2xl font-bold mb-6">
+Registros Recientes
+</h3>
+
+<div id="logArea" class="space-y-3">
+</div>
+
+</section>
+
+</main>
+
+<script>
+const firebaseConfig = {
+apiKey: "AIzaSyCLTOytJriAStEInDwgiacFudrbATEEII",  //aqui ya reeplace con la api 
+authDomain: "bmo-tdah.firebaseapp.com",
+databaseURL: "https://bmo-tdah-default-rtdb.firebaseio.com",
+projectId: "bmo-tdah",
+storageBucket: "bmo-tdah.firebasestorage.app",
+messagingSenderId: "156416136166",
+appId: "1:156416136166:web:754dc255f1272aebfcbc27"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const database = firebase.database();
+const tareasRef = database.ref('/tareas');
+const estadoRef = database.ref('/tareas/estudio');
+
+function agregarLog(mensaje,tipo='info'){
+const log=document.getElementById('logArea');
+const div=document.createElement('div');
+div.className='flex items-center gap-4 p-4 rounded-xl bg-white';
+div.innerHTML='<div class="flex-1">'+mensaje+'</div><div>'+new Date().toLocaleTimeString()+'</div>';
+log.prepend(div);
+}
+
+function actualizarEstado(texto){
+document.getElementById('statusText').innerHTML=texto;
+}
+
+function enviarOrden(tipo){
+
+actualizarEstado('Enviando orden...');
+
+tareasRef.update({
+pendiente:true,
+tipo:tipo,
+timestamp:firebase.database.ServerValue.TIMESTAMP,
+estado:'pendiente'
+})
+.then(()=>{
+agregarLog('Orden enviada: '+tipo,'exito');
+actualizarEstado('Orden enviada. Esperando respuesta de BMO...');
+});
+}
+
+function resetearTareas(){
+tareasRef.update({
+pendiente:false,
+tipo:'',
+estado:'reset'
+})
+.then(()=>{
+agregarLog('Sistema reiniciado');
+actualizarEstado('Sistema reiniciado');
+});
+}
+
+estadoRef.on('value',(snapshot)=>{
+const data=snapshot.val();
+if(!data)return;
+
+if(data.estado==='completada'){
+agregarLog('Misión completada: '+(data.mensaje||''));
+actualizarEstado('Misión completada');
+}
+
+if(data.estado==='fallida'){
+agregarLog('Misión fallida: '+(data.mensaje||''));
+actualizarEstado('Misión fallida');
+}
+
+if(data.estado==='en_progreso'){
+agregarLog('Misión en progreso: '+(data.mensaje||''));
+actualizarEstado('BMO está trabajando...');
+}
+});
+
+document.getElementById('btnEstudio').addEventListener('click',()=>enviarOrden('estudio'));
+document.getElementById('btnGym').addEventListener('click',()=>enviarOrden('gym'));
+document.getElementById('btnReset').addEventListener('click',()=>{
+if(confirm('¿Resetear tareas?')) resetearTareas();
+});
+
+agregarLog('Conectado a Firebase');
+actualizarEstado('Conectado a Firebase');
+</script>
+
+</body>
+</html>
