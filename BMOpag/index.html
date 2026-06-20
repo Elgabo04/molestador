@@ -1,306 +1,341 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🤖 BMO - Control Remoto</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f0f4f8;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 20px;
-    }
-    .card {
-      max-width: 500px;
-      width: 100%;
-      background: white;
-      border-radius: 30px;
-      padding: 40px 30px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-      text-align: center;
-      transition: 0.3s;
-    }
-    .card:hover {
-      box-shadow: 0 25px 50px rgba(0,0,0,0.15);
-    }
-    h1 {
-      font-size: 2.2rem;
-      margin-bottom: 8px;
-    }
-    .subtitle {
-      color: #555;
-      font-size: 1rem;
-      margin-bottom: 30px;
-    }
-    .avatar {
-      font-size: 4.5rem;
-      margin-bottom: 10px;
-    }
-    .status-box {
-      background: #eef2f7;
-      padding: 15px;
-      border-radius: 15px;
-      margin-bottom: 25px;
-      font-size: 0.95rem;
-      color: #333;
-    }
-    .btn {
-      display: inline-block;
-      padding: 16px 40px;
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: white;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: 0.2s;
-      background: #1a73e8;
-      box-shadow: 0 6px 14px rgba(26, 115, 232, 0.3);
-      width: 100%;
-      margin-top: 8px;
-    }
-    .btn:hover {
-      background: #1557b0;
-      transform: translateY(-2px);
-      box-shadow: 0 10px 20px rgba(26, 115, 232, 0.4);
-    }
-    .btn:active {
-      transform: scale(0.97);
-    }
-    .btn-secondary {
-      background: #34a853;
-      box-shadow: 0 6px 14px rgba(52, 168, 83, 0.3);
-    }
-    .btn-secondary:hover {
-      background: #2d8f47;
-    }
-    .btn-danger {
-      background: #ea4335;
-      box-shadow: 0 6px 14px rgba(234, 67, 53, 0.3);
-    }
-    .btn-danger:hover {
-      background: #c5221f;
-    }
-    .log-area {
-      margin-top: 25px;
-      padding: 15px;
-      background: #f8f9fa;
-      border-radius: 12px;
-      text-align: left;
-      font-size: 0.85rem;
-      max-height: 200px;
-      overflow-y: auto;
-      border: 1px solid #e0e4e8;
-      color: #333;
-    }
-    .log-area p {
-      margin: 4px 0;
-      border-bottom: 1px solid #eee;
-      padding: 4px 0;
-    }
-    .log-area .time {
-      color: #888;
-      font-size: 0.75rem;
-      margin-right: 6px;
-    }
-    .footer {
-      margin-top: 20px;
-      font-size: 0.8rem;
-      color: #aaa;
-    }
-    .badge {
-      display: inline-block;
-      background: #1a73e8;
-      color: white;
-      padding: 3px 12px;
-      border-radius: 20px;
-      font-size: 0.7rem;
-      letter-spacing: 0.5px;
-      margin-left: 6px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BMO Assistant - Zen Flow</title>
+
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Hanken+Grotesk:wght@600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" type="image/png" href="./icons/icon-192.png">
+<link rel="apple-touch-icon" href="./icons/icon-512.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#5bbdb8">
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+<style>
+  /* Fondo general con degradado suave */
+  body { 
+    background: radial-gradient(circle at top, #f0faf9 0%, #e0f2f1 35%, #f8fafc 100%); 
+    transition: background 0.5s ease; 
+    position: relative;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  
+  /* MARCA DE AGUA BMO - Amigable con TDAH (baja opacidad, sin distracciones) */
+  body::before {
+    content: "";
+    position: fixed;
+    bottom: -5%;
+    right: -2%;
+    width: 60vmin;
+    height: 60vmin;
+    /* Imagen clásica de BMO en formato PNG transparente */
+    background-image: url('https://upload.wikimedia.org/wikipedia/en/8/81/BMO_from_Adventure_Time.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    opacity: 0.08; /* Muy transparente para no distraer */
+    z-index: -1;
+    pointer-events: none; /* Evita que estorbe al hacer clic */
+    filter: drop-shadow(0px 10px 20px rgba(0,0,0,0.2));
+  }
+
+  .scanline { animation: scan 4.3s linear infinite; }
+  @keyframes scan { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
+  
+  /* Clases para estados de botones */
+  .btn-disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; box-shadow: none !important; filter: grayscale(100%); }
+  .pulse-active { animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+  @keyframes pulse-ring { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+</style>
 </head>
-<body>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js")
+      .catch(error => console.error("Error registrando PWA:", error));
+  });
+}
+</script>
 
-  <div class="card">
-    <div class="avatar">🤖</div>
-    <h1>BMO</h1>
-    <p class="subtitle">Asistente para gestión de tareas</p>
+<body class="text-slate-950 antialiased transition-colors duration-500" id="mainBody">
+  <main class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8 relative z-10">
+    
+    <section class="rounded-[2rem] bg-white/90 backdrop-blur-md border border-teal-100 shadow-[0_28px_60px_rgba(20,184,166,0.08)] p-6 sm:p-8">
+      <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <div class="space-y-4">
+          <span class="inline-flex rounded-full bg-teal-500 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-white shadow-sm">BMO SYSTEM</span>
+          <h1 class="text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">Panel de Control</h1>
+          <p class="max-w-2xl text-slate-600">Un espacio tranquilo y sin ruido visual. Un solo toque para comenzar.</p>
+        </div>
+        <div class="rounded-[2rem] bg-slate-950 px-5 py-4 text-white shadow-xl ring-1 ring-teal-500/30 text-center">
+          <p class="text-xs uppercase tracking-[0.2em] text-teal-300">Enlace</p>
+          <p class="mt-1 text-xl font-semibold text-teal-400">● BMO Conectado</p>
+        </div>
+      </div>
+    </section>
 
-    <div class="status-box" id="statusBox">
-      <span id="statusText">✅ Conectado a Firebase</span>
+    <section class="mt-6 grid gap-6 lg:grid-cols-[1.4fr_0.95fr]">
+      
+      <article class="relative overflow-hidden rounded-[2rem] bg-teal-950 p-6 shadow-[0_30px_80px_rgba(20,184,166,0.16)] sm:p-8 transition-all duration-300 border border-teal-800" id="statusCard">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(45,212,191,.15),_transparent_40%),linear-gradient(180deg,#134e4a_0%,#042f2e_100%)]"></div>
+        <div class="relative grid gap-8">
+          <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <p class="text-sm uppercase tracking-[0.24em] text-teal-400/80">Tarea Actual</p>
+              <h2 id="statusText" class="mt-3 text-3xl font-semibold text-teal-50 sm:text-4xl">Esperando instrucciones</h2>
+            </div>
+            <span id="statusBadge" class="inline-flex rounded-full bg-teal-900 px-4 py-2 text-sm font-semibold text-teal-300 ring-1 ring-teal-700 transition-colors">Inactivo</span>
+          </div>
+          
+          <div class="relative overflow-hidden rounded-[1.75rem] border border-teal-800/80 bg-teal-100 p-8 shadow-inner">
+            <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(204,251,241,.4)_0%,#ccfbf1_100%)]"></div>
+            <div class="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.05)_50%),linear-gradient(90deg,rgba(255,0,0,0.02),rgba(0,255,0,0.01),rgba(0,0,255,0.02))] bg-[length:100%_4px,3px_100%] pointer-events-none"></div>
+            <div class="scanline absolute inset-0 bg-gradient-to-b from-transparent via-teal-400/10 to-transparent pointer-events-none"></div>
+            
+            <div class="relative grid place-items-center h-24">
+              <div class="relative flex flex-col items-center gap-6">
+                <div class="flex items-center gap-12">
+                  <span id="eyeLeft" class="h-5 w-5 rounded-full bg-teal-950 transition-all duration-300"></span>
+                  <span id="eyeRight" class="h-5 w-5 rounded-full bg-teal-950 transition-all duration-300"></span>
+                </div>
+                <div id="mouth" class="h-3 w-16 rounded-full bg-teal-950 transition-all duration-300 border-b-2 border-teal-900"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <div class="grid gap-4" id="actionButtons">
+        <button id="btnEstudio" class="group rounded-[1.75rem] border border-teal-100 bg-white/90 backdrop-blur-sm px-6 py-5 text-left shadow-lg shadow-teal-100/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-amber-300 relative overflow-hidden focus:outline-none focus:ring-4 focus:ring-teal-200">
+          <div class="relative flex items-center justify-between gap-4">
+            <div class="inline-flex h-14 w-14 items-center justify-center rounded-3xl bg-amber-400 text-2xl shadow-[0_8px_20px_rgba(245,158,11,0.25)]">💻</div>
+            <span class="rounded-full bg-teal-50 px-3 py-1 text-xs font-bold text-teal-700">ENFOQUE</span>
+          </div>
+          <div class="relative mt-4">
+            <h3 class="text-xl font-bold text-slate-900">Estudio / IT</h3>
+            <p class="mt-2 text-sm text-slate-500 leading-relaxed">Bloqueo de distracciones. Prepara tu café o agua y empecemos a concentrarnos.</p>
+          </div>
+        </button>
+
+        <button id="btnGym" class="group rounded-[1.75rem] border border-teal-100 bg-white/90 backdrop-blur-sm px-6 py-5 text-left shadow-lg shadow-teal-100/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-emerald-300 relative overflow-hidden focus:outline-none focus:ring-4 focus:ring-teal-200">
+          <div class="relative flex items-center justify-between gap-4">
+            <div class="inline-flex h-14 w-14 items-center justify-center rounded-3xl bg-emerald-500 text-2xl shadow-[0_8px_20px_rgba(16,185,129,0.25)]">🏋️</div>
+            <span class="rounded-full bg-teal-50 px-3 py-1 text-xs font-bold text-teal-700">ENERGÍA</span>
+          </div>
+          <div class="relative mt-4">
+            <h3 class="text-xl font-bold text-slate-900">Entrenamiento</h3>
+            <p class="mt-2 text-sm text-slate-500 leading-relaxed">Libera energía. Prepara la rutina física para despejar la mente.</p>
+          </div>
+        </button>
+
+        <button id="btnReset" class="group rounded-[1.75rem] border border-slate-200 bg-slate-50/90 backdrop-blur-sm px-6 py-5 text-left shadow-sm transition-all duration-300 hover:bg-slate-100 mt-2 focus:outline-none">
+          <div class="flex items-center gap-3">
+            <div class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-rose-500 text-white shadow-md">↺</div>
+            <div>
+              <h3 class="text-md font-semibold text-slate-900">Reiniciar Sistema</h3>
+              <p class="text-xs text-slate-500">Cancela la tarea actual de BMO</p>
+            </div>
+          </div>
+        </button>
+      </div>
+    </section>
+
+    <section class="mt-8 rounded-[2rem] bg-white/90 backdrop-blur-md border border-teal-100 p-6 sm:p-8 shadow-[0_20px_50px_rgba(20,184,166,0.06)]">
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-b border-slate-100 pb-4">
+        <div>
+          <h2 class="text-xl font-bold text-slate-900">Registro de Misiones</h2>
+          <p class="mt-1 text-sm text-slate-500">Mira tus victorias recientes aquí.</p>
+        </div>
+      </div>
+      <div id="logArea" class="mt-6 grid gap-4 max-h-[400px] overflow-y-auto pr-2 scrollbar-thin"></div>
+    </section>
+  </main>
+
+<script>
+// Configuración de Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyCLTOytJriAStEInDwgiacFudrbATEEII", 
+  authDomain: "bmo-tdah.firebaseapp.com",
+  databaseURL: "https://bmo-tdah-default-rtdb.firebaseio.com",
+  projectId: "bmo-tdah",
+  storageBucket: "bmo-tdah.firebasestorage.app",
+  messagingSenderId: "156416136166",
+  appId: "1:156416136166:web:754dc255f1272aebfcbc27"
+};
+
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
+const tareasRef = database.ref('/tareas');
+
+const btnEstudio = document.getElementById('btnEstudio');
+const btnGym = document.getElementById('btnGym');
+const btnReset = document.getElementById('btnReset');
+const statusText = document.getElementById('statusText');
+const statusBadge = document.getElementById('statusBadge');
+
+// Animaciones faciales de BMO estilo clásico
+function animarBMO(estado) {
+  const eyeL = document.getElementById('eyeLeft');
+  const eyeR = document.getElementById('eyeRight');
+  const mouth = document.getElementById('mouth');
+
+  if(estado === 'trabajando') {
+    eyeL.className = 'h-5 w-6 rounded-t-full rounded-b-sm bg-teal-950 pulse-active';
+    eyeR.className = 'h-5 w-6 rounded-t-full rounded-b-sm bg-teal-950 pulse-active';
+    mouth.className = 'h-6 w-10 rounded-full bg-teal-950 mt-2';
+  } else if (estado === 'exito') {
+    eyeL.className = 'h-3 w-8 rounded-full bg-teal-950 rotate-[-15deg] transform origin-right';
+    eyeR.className = 'h-3 w-8 rounded-full bg-teal-950 rotate-[15deg] transform origin-left';
+    mouth.className = 'h-8 w-20 rounded-b-full rounded-t-sm bg-teal-950 shadow-inner mt-1';
+  } else {
+    // Cara neutra
+    eyeL.className = 'h-5 w-5 rounded-full bg-teal-950 transition-all duration-300';
+    eyeR.className = 'h-5 w-5 rounded-full bg-teal-950 transition-all duration-300';
+    mouth.className = 'h-3 w-16 rounded-full bg-teal-950 transition-all duration-300 border-b-2 border-teal-900';
+  }
+}
+
+function agregarLog(mensaje, tipo = 'info') {
+  const log = document.getElementById('logArea');
+  const entry = document.createElement('div');
+  
+  let styles = 'bg-slate-50 border-slate-200 text-slate-700';
+  let icon = '🎮';
+
+  if (tipo === 'exito') {
+    styles = 'bg-teal-50/80 border-teal-200 text-teal-900';
+    icon = '🌟';
+  }
+  if (tipo === 'trabajando') {
+    styles = 'bg-amber-50 border-amber-200 text-amber-900';
+    icon = '⚙️';
+  }
+  if (tipo === 'error') {
+    styles = 'bg-rose-50 border-rose-200 text-rose-900';
+    icon = '💥';
+  }
+
+  entry.className = `rounded-2xl border ${styles} p-4 flex gap-4 items-start shadow-sm transition-all duration-500`;
+  
+  entry.innerHTML = `
+    <div class="text-xl mt-1">${icon}</div>
+    <div>
+      <p class="font-medium">${mensaje}</p>
+      <time class="mt-1 text-xs opacity-70 block">${new Date().toLocaleTimeString()}</time>
     </div>
+  `;
+  
+  log.prepend(entry);
+}
 
-    <button class="btn" id="btnEstudio">📚 Iniciar Estudio</button>
-    <button class="btn btn-secondary" id="btnGym" style="margin-top: 12px;">🏋️ Preparar Gym</button>
-    <button class="btn btn-danger" id="btnReset" style="margin-top: 12px; background: #888; box-shadow: none;">🔄 Resetear Tareas</button>
+function actualizarUI(estado) {
+  if (estado === 'esperando_respuesta' || estado === 'en_progreso') {
+    btnEstudio.classList.add('btn-disabled');
+    btnGym.classList.add('btn-disabled');
+    btnEstudio.disabled = true;
+    btnGym.disabled = true;
+    
+    statusBadge.textContent = "Procesando";
+    statusBadge.className = "inline-flex rounded-full bg-amber-500/20 px-4 py-2 text-sm font-bold text-amber-400 ring-1 ring-amber-500/50 pulse-active";
+    animarBMO('trabajando');
 
-    <div class="log-area" id="logArea">
-      <p><span class="time">🟢</span> Sistema iniciado. Esperando acciones...</p>
-    </div>
-    <div class="footer">v1.0 · Firebase Realtime Database</div>
-  </div>
-
-  <!-- 🔥 Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-
-  <script>
-    // ============================================================
-    // 1. CONFIGURACIÓN DE FIREBASE (¡YA CON TUS CREDENCIALES!)
-    // ============================================================
-    const firebaseConfig = {
-      apiKey: "AIzaSyCLTOytJriAStEInDwgiacFudrbATEEII",
-      authDomain: "bmo-tdah.firebaseapp.com",
-      databaseURL: "https://bmo-tdah-default-rtdb.firebaseio.com",
-      projectId: "bmo-tdah",
-      storageBucket: "bmo-tdah.firebasestorage.app",
-      messagingSenderId: "156416136166",
-      appId: "1:156416136166:web:754dc255f1272aebfcbc27",
-      measurementId: "G-PDQMW2MQ1W"
-    };
-
-    // Inicializar Firebase
-    firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
-
-    // ============================================================
-    // 2. REFERENCIAS A LA BASE DE DATOS
-    // ============================================================
-    const tareasRef = database.ref('/tareas');
-    const pendienteRef = database.ref('/tareas/pendiente');
-    const estadoRef = database.ref('/tareas/estudio');
-
-    // ============================================================
-    // 3. FUNCIONES PARA ACTUALIZAR LA INTERFAZ
-    // ============================================================
-    function agregarLog(mensaje, tipo = 'info') {
-      const log = document.getElementById('logArea');
-      const p = document.createElement('p');
-      const now = new Date();
-      const hora = now.toLocaleTimeString();
-      const icono = tipo === 'exito' ? '✅' : tipo === 'error' ? '❌' : 'ℹ️';
-      p.innerHTML = `<span class="time">${hora}</span> ${icono} ${mensaje}`;
-      log.appendChild(p);
-      log.scrollTop = log.scrollHeight;
+  } else {
+    btnEstudio.classList.remove('btn-disabled');
+    btnGym.classList.remove('btn-disabled');
+    btnEstudio.disabled = false;
+    btnGym.disabled = false;
+    
+    if(estado === 'completada') {
+      statusBadge.textContent = "Completado";
+      statusBadge.className = "inline-flex rounded-full bg-teal-500/20 px-4 py-2 text-sm font-bold text-teal-300 ring-1 ring-teal-500/50";
+      animarBMO('exito');
+      setTimeout(() => animarBMO('normal'), 5000);
+    } else {
+      statusBadge.textContent = "Listo";
+      statusBadge.className = "inline-flex rounded-full bg-teal-800/50 px-4 py-2 text-sm font-semibold text-teal-300 ring-1 ring-teal-600/50";
+      animarBMO('normal');
     }
+  }
+}
 
-    function actualizarEstado(texto, tipo = 'info') {
-      const statusBox = document.getElementById('statusText');
-      const emoji = tipo === 'exito' ? '✅' : tipo === 'error' ? '❌' : '🟢';
-      statusBox.innerHTML = `${emoji} ${texto}`;
-      if (tipo === 'exito') {
-        statusBox.parentElement.style.background = '#e6f4ea';
-      } else if (tipo === 'error') {
-        statusBox.parentElement.style.background = '#fce8e6';
-      } else {
-        statusBox.parentElement.style.background = '#eef2f7';
+function enviarOrden(tipo) {
+  statusText.textContent = 'Enviando orden...';
+  actualizarUI('esperando_respuesta');
+
+  tareasRef.update({
+    pendiente: true,
+    tipo: tipo,
+    timestamp: firebase.database.ServerValue.TIMESTAMP,
+    estado: 'pendiente'
+  }).catch((error) => {
+    agregarLog(`Error: ${error.message}`, 'error');
+    statusText.textContent = 'Error de conexión';
+    actualizarUI('libre');
+  });
+}
+
+function resetearTareas() {
+  tareasRef.update({
+    pendiente: false,
+    tipo: '',
+    estado: 'reset'
+  }).then(() => {
+    agregarLog('Sistema reiniciado. ¿A qué jugamos ahora?', 'info');
+    statusText.textContent = 'Esperando instrucciones';
+    actualizarUI('libre');
+  });
+}
+
+tareasRef.on('value', (snapshot) => {
+  const data = snapshot.val();
+  if (!data) return;
+
+  const mensajeBmo = data.mensaje ? `: ${data.mensaje}` : '';
+
+  switch (data.estado) {
+    case 'en_progreso':
+      agregarLog(`BMO está preparando la zona para ${data.tipo}...`, 'trabajando');
+      statusText.textContent = `Modo ${data.tipo} activado`;
+      actualizarUI('en_progreso');
+      break;
+
+    case 'completada':
+      agregarLog(`¡BMO dice que lo hiciste genial! ${mensajeBmo}`, 'exito');
+      statusText.textContent = '¡Nivel superado!';
+      actualizarUI('completada');
+      break;
+
+    case 'fallida':
+      agregarLog(`BMO no pudo terminar. Algo falló ${mensajeBmo}`, 'error');
+      statusText.textContent = 'Misión interrumpida';
+      actualizarUI('libre');
+      break;
+
+    case 'reset':
+      if (statusText.textContent !== 'Esperando instrucciones') {
+        statusText.textContent = 'Esperando instrucciones';
+        actualizarUI('libre');
       }
-    }
+      break;
+  }
+});
 
-    // ============================================================
-    // 4. ENVIAR ÓRDENES A FIREBASE
-    // ============================================================
-    function enviarOrden(tipo) {
-      let logMsg = '';
-      switch (tipo) {
-        case 'estudio':
-          logMsg = '📚 Misión de estudio iniciada desde la web.';
-          break;
-        case 'gym':
-          logMsg = '🏋️ Misión de gym iniciada desde la web.';
-          break;
-        default:
-          return;
-      }
+btnEstudio.addEventListener('click', () => enviarOrden('estudio'));
+btnGym.addEventListener('click', () => enviarOrden('gym'));
+btnReset.addEventListener('click', () => {
+  if (confirm('¿BMO debe cancelar todo y reiniciar?')) {
+    resetearTareas();
+  }
+});
 
-      agregarLog(logMsg, 'info');
-      actualizarEstado('⏳ Enviando orden...', 'info');
-
-      tareasRef.update({
-        pendiente: true,
-        tipo: tipo,
-        timestamp: firebase.database.ServerValue.TIMESTAMP,
-        estado: 'pendiente'
-      })
-      .then(() => {
-        agregarLog(`✅ Orden "${tipo}" enviada a Firebase.`, 'exito');
-        actualizarEstado('✅ Orden enviada. Esperando respuesta de BMO...', 'exito');
-      })
-      .catch((error) => {
-        agregarLog(`❌ Error al enviar: ${error.message}`, 'error');
-        actualizarEstado('❌ Error de conexión.', 'error');
-      });
-    }
-
-    function resetearTareas() {
-      tareasRef.update({
-        pendiente: false,
-        tipo: '',
-        estado: 'reset'
-      })
-      .then(() => {
-        agregarLog('🔄 Tareas reseteadas.', 'info');
-        actualizarEstado('🔄 Sistema reiniciado.', 'info');
-      })
-      .catch((error) => {
-        agregarLog(`❌ Error al resetear: ${error.message}`, 'error');
-      });
-    }
-
-    // ============================================================
-    // 5. ESCUCHAR CAMBIOS DESDE FIREBASE (Actualizar la UI)
-    // ============================================================
-    estadoRef.on('value', (snapshot) => {
-      const data = snapshot.val();
-      if (data) {
-        const estado = data.estado || '';
-        const mensaje = data.mensaje || '';
-        if (estado === 'completada') {
-          agregarLog(`🎉 Misión completada: ${mensaje}`, 'exito');
-          actualizarEstado('✅ ¡Misión completada!', 'exito');
-        } else if (estado === 'fallida') {
-          agregarLog(`❌ Misión fallida: ${mensaje}`, 'error');
-          actualizarEstado('❌ Misión fallida. Intenta de nuevo.', 'error');
-        } else if (estado === 'en_progreso') {
-          agregarLog(`⏳ Misión en progreso: ${mensaje}`, 'info');
-          actualizarEstado('⏳ BMO está trabajando...', 'info');
-        }
-      }
-    });
-
-    // ============================================================
-    // 6. EVENTOS DE LOS BOTONES
-    // ============================================================
-    document.getElementById('btnEstudio').addEventListener('click', () => {
-      enviarOrden('estudio');
-    });
-
-    document.getElementById('btnGym').addEventListener('click', () => {
-      enviarOrden('gym');
-    });
-
-    document.getElementById('btnReset').addEventListener('click', () => {
-      if (confirm('¿Estás seguro de resetear todas las tareas?')) {
-        resetearTareas();
-      }
-    });
-
-    // ============================================================
-    // 7. INICIALIZAR
-    // ============================================================
-    agregarLog('🟢 Conectado a Firebase.', 'info');
-    actualizarEstado('✅ Conectado a Firebase. Esperando acción.', 'info');
-
-  </script>
+agregarLog('¡Hola! BMO está listo para jugar... digo, para ayudarte.', 'exito');
+actualizarUI('libre');
+</script>
 </body>
 </html>
