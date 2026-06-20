@@ -5,9 +5,62 @@
         <item name="colorOnPrimary">@color/beb_blanco</item>
         <item name="colorSecondary">@color/beb_azul</item>
         <item name="colorOnSecondary">@color/beb_blanco</item>
-        <item name="android:fontFamily">sans-serif</item>
-        <item name="android:navigationBarColor">@color/beb_blanco</item>
-        <item name="android:statusBarColor">@color/beb_fondo</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:navigationBarColor">@color/beb_fondo_nav</item>
+        <item name="android:statusBarColor">@color/beb_fondo_appbar</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowBackground">@color/beb_fondo</item>
+
+        <!-- Estilo global de MaterialCardView -->
+        <item name="materialCardViewStyle">@style/BebApp.CardView</item>
+
+        <!-- Estilo global de TextInputLayout -->
+        <item name="textInputStyle">@style/BebApp.TextInputLayout</item>
+    </style>
+
+    <!-- Estilo para cards de tareas e historial -->
+    <style name="BebApp.CardView" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">12dp</item>
+        <item name="cardElevation">2dp</item>
+        <item name="cardBackgroundColor">@color/beb_blanco</item>
+        <item name="strokeColor">@color/beb_borde</item>
+        <item name="strokeWidth">0dp</item>
+    </style>
+
+    <!-- Estilo para campos de texto en modales -->
+    <style name="BebApp.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/beb_verde</item>
+        <item name="hintTextColor">@color/beb_verde</item>
+        <item name="boxCornerRadiusTopStart">10dp</item>
+        <item name="boxCornerRadiusTopEnd">10dp</item>
+        <item name="boxCornerRadiusBottomStart">10dp</item>
+        <item name="boxCornerRadiusBottomEnd">10dp</item>
+    </style>
+
+    <!-- Estilo para botones verdes principales -->
+    <style name="BebApp.BotonPrimario" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/beb_verde</item>
+        <item name="cornerRadius">10dp</item>
+        <item name="android:textColor">@color/beb_blanco</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <!-- Estilo para botones de texto sin fondo -->
+    <style name="BebApp.BotonTexto" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/beb_texto_secundario</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">15sp</item>
+        <item name="rippleColor">@color/beb_borde</item>
+    </style>
+
+    <!-- Estilo para botones con borde -->
+    <style name="BebApp.BotonOutline" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="cornerRadius">10dp</item>
+        <item name="strokeColor">@color/beb_borde</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="android:textColor">@color/beb_texto_principal</item>
+        <item name="android:textAllCaps">false</item>
     </style>
 </resources>

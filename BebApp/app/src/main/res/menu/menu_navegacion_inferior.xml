@@ -2,10 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_tareas"
-        android:icon="@android:drawable/ic_menu_agenda"
-        android:title="Tareas" />
+        android:icon="@drawable/ic_tareas"
+        android:title="@string/menu_tareas" />
     <item
         android:id="@+id/menu_historial"
-        android:icon="@android:drawable/ic_menu_recent_history"
-        android:title="Historial" />
+        android:icon="@drawable/ic_historial"
+        android:title="@string/menu_historial" />
 </menu>

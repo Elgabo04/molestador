@@ -198,12 +198,6 @@ Descripción del sistema: El usuario mediante una aplicación móvil/web, inicia
 
 
 
-
-
-
-
-
-
 Flujo de la app movil
 
 1. Pantalla con boton para autenticarse con google
@@ -288,6 +282,4 @@ Gráficos a mostrar
 * Gráfico de pastel circular para mostrar proporción de tareas realizadas, en progreso y postergados
 
 Google auth para sesiones y base de datos supabase
-
-
 

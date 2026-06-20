@@ -1,3 +1,74 @@
 <resources>
     <string name="app_name">BebApp</string>
+
+    <!-- Placeholder para el Google Client ID - REEMPLAZAR con tu ID real -->
+    <string name="default_web_client_id">TU_GOOGLE_CLIENT_ID_AQUI</string>
+
+    <!-- Pantalla de login -->
+    <string name="login_subtitulo">Organiza tus tareas y valida tus avances con tu dispositivo.</string>
+    <string name="login_boton_google">Acceder con Google</string>
+
+    <!-- Dashboard -->
+    <string name="logout_descripcion">Cerrar sesión</string>
+    <string name="usuario_defecto">Estudiante</string>
+
+    <!-- Navegacion inferior -->
+    <string name="menu_tareas">Tareas</string>
+    <string name="menu_historial">Historial</string>
+
+    <!-- Seccion Tareas -->
+    <string name="banner_vencidas">%d tareas vencidas</string>
+    <string name="banner_vencidas_singular">1 tarea vencida</string>
+    <string name="banner_sin_vencidas">Sin tareas vencidas ✓</string>
+    <string name="btn_agregar_tarea">Agregar tarea</string>
+    <string name="btn_editar_tarea">Editar tarea</string>
+    <string name="proximidad_vencido">vencido</string>
+    <string name="proximidad_proximo">próximo</string>
+    <string name="proximidad_al_dia">al día</string>
+    <string name="vence_prefijo">Vence: %s</string>
+
+    <!-- Seccion sin dispositivo -->
+    <string name="sin_dispositivo_titulo">Tu dispositivo todavía no está vinculado</string>
+    <string name="sin_dispositivo_subtitulo">Conecta tu BebBot escaneando el código QR del dispositivo para comenzar a gestionar tus tareas.</string>
+    <string name="btn_vincular_dispositivo">Vincula tu dispositivo para comenzar</string>
+
+    <!-- Modal crear/editar tarea -->
+    <string name="modal_agregar_titulo">Nueva tarea</string>
+    <string name="modal_editar_titulo">Editar tarea</string>
+    <string name="hint_titulo_tarea">Título de la tarea</string>
+    <string name="hint_descripcion_tarea">Descripción del trabajo</string>
+    <string name="btn_seleccionar_fecha">Seleccionar fecha y hora</string>
+    <string name="btn_cancelar">Cancelar</string>
+    <string name="btn_guardar">Guardar</string>
+    <string name="error_campos_vacios">Completa título y descripción.</string>
+    <string name="error_fecha_pasada">La fecha de vencimiento debe ser futura.</string>
+
+    <!-- Modal vincular dispositivo -->
+    <string name="vincular_titulo">Vincular dispositivo</string>
+    <string name="vincular_instrucciones">Apunta la cámara al código QR de tu BebBot para vincular tu cuenta.</string>
+    <string name="vincular_exito">¡Dispositivo vinculado correctamente!</string>
+    <string name="vincular_permiso_camara">La cámara es necesaria para vincular el dispositivo.</string>
+    <string name="camara_qr_placeholder">Cámara QR</string>
+
+    <!-- Historial -->
+    <string name="banner_reprogramadas">Reprogramaste %d tareas</string>
+    <string name="banner_reprogramadas_singular">Reprogramaste 1 tarea</string>
+    <string name="historial_vencimiento">Vencimiento: %s</string>
+    <string name="historial_fecha_anterior">Fecha anterior: %s</string>
+    <string name="estado_realizado">realizado</string>
+    <string name="estado_en_proceso">en proceso</string>
+    <string name="estado_postergado">postergado</string>
+
+    <!-- Notificaciones -->
+    <string name="canal_notificaciones_nombre">Alertas de tareas</string>
+    <string name="canal_notificaciones_descripcion">Notificaciones de tareas próximas a vencer y vencidas</string>
+    <string name="notif_proxima_titulo">⚠️ Tarea próxima a vencer</string>
+    <string name="notif_proxima_texto">%s vence pronto</string>
+    <string name="notif_vencida_titulo">🔴 ¡Tarea vencida!</string>
+    <string name="notif_vencida_texto">%s ya venció — ¡Actúa ahora!</string>
+
+    <!-- Content descriptions -->
+    <string name="cd_logo_app">Logo de BebApp</string>
+    <string name="cd_icono_google">Ícono de Google</string>
+    <string name="cd_avatar_usuario">Avatar del usuario</string>
 </resources>

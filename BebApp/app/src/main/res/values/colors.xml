@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Colores primarios de la paleta BebApp -->
     <color name="beb_verde">#5DD62C</color>
     <color name="beb_verde_oscuro">#23650E</color>
     <color name="beb_verde_pastel">#E6F8DD</color>
@@ -10,11 +11,28 @@
     <color name="beb_rojo_oscuro">#8B1D05</color>
     <color name="beb_rojo_pastel">#FFE2DC</color>
     <color name="beb_azul">#3737F6</color>
+    <color name="beb_azul_suave">#E8EAFF</color>
+
+    <!-- Fondos de la aplicacion -->
     <color name="beb_fondo">#E8EDFA</color>
+    <color name="beb_fondo_appbar">#D8DFF0</color>
+    <color name="beb_fondo_nav">#F0F3FA</color>
     <color name="beb_blanco">#FFFFFF</color>
+
+    <!-- Textos -->
     <color name="beb_texto_principal">#111827</color>
     <color name="beb_texto_secundario">#4B5563</color>
+    <color name="beb_texto_hint">#9CA3AF</color>
+
+    <!-- Bordes y sombras -->
     <color name="beb_borde">#D7DDEC</color>
+    <color name="beb_sombra">#1A111827</color>
+
+    <!-- Navegacion seleccionada/no seleccionada -->
+    <color name="beb_nav_activo">#5DD62C</color>
+    <color name="beb_nav_inactivo">#9CA3AF</color>
+
+    <!-- Colores de sistema -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>
