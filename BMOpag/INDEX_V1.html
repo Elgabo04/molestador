@@ -16,28 +16,9 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
 <style>
-body{font-family:Inter,sans-serif;background:#f7f9fb}
-.glass-card{
-background:rgba(255,255,255,.45);
-backdrop-filter:blur(12px);
-border:1px solid rgba(195,198,215,.5);
-}
-.pixel-monitor{
-background:linear-gradient(145deg,#191c1e,#2d3133);
-box-shadow:inset 0 2px 10px rgba(0,0,0,.5),0 20px 40px rgba(0,0,0,.2);
-}
-.bmo-face-pulse{
-animation:pulse 4s infinite;
-}
-@keyframes pulse{
-0%,100%{opacity:1;filter:drop-shadow(0 0 5px #6ffbbe)}
-50%{opacity:.8;filter:drop-shadow(0 0 15px #6ffbbe)}
-}
-.scanline{
-width:100%;height:2px;background:rgba(111,251,190,.1);
-position:absolute;animation:scan 3s linear infinite;
-}
-@keyframes scan{0%{top:0}100%{top:100%}}
+body { background: radial-gradient(circle at top, #eff6ff 0%, #e4e9fb 35%, #f8fafc 100%); }
+.scanline { animation:scan 4.3s linear infinite; }
+@keyframes scan { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
 </style>
 </head>
 
@@ -49,112 +30,94 @@ if ("serviceWorker" in navigator) {
 }
 </script>
 
-<body class="text-slate-900">
+<body class="bg-slate-50 text-slate-950 antialiased">
+  <main class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+    <section class="rounded-[2rem] bg-white/95 border border-slate-200 shadow-[0_28px_60px_rgba(15,23,42,0.08)] p-6 sm:p-8">
+      <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <div class="space-y-4">
+          <span class="inline-flex rounded-full bg-sky-600 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-white">BMO</span>
+          <h1 class="text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">Panel de control enfocado</h1>
+          <p class="max-w-2xl text-slate-600">Interfaz limpia y directa para reducir distracciones. Botones grandes, mensajes claros y un centro de comando con estilo.</p>
+        </div>
+        <div class="rounded-[2rem] bg-slate-950 px-5 py-4 text-white shadow-xl ring-1 ring-slate-700/20">
+          <p class="text-sm uppercase tracking-[0.2em] text-slate-400">Conexión</p>
+          <p class="mt-2 text-2xl font-semibold">Firebase activa</p>
+        </div>
+      </div>
+    </section>
 
-<main class="min-h-screen py-10 px-6 max-w-7xl mx-auto">
+    <section class="mt-6 grid gap-6 lg:grid-cols-[1.4fr_0.95fr]">
+      <article class="relative overflow-hidden rounded-[2rem] bg-slate-950 p-6 shadow-[0_30px_80px_rgba(15,23,42,0.16)] sm:p-8">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(79,70,229,.18),_transparent_34%),radial-gradient(circle_at_bottom_right,_rgba(56,189,248,.16),_transparent_25%),linear-gradient(180deg,#111827_0%,#0F172A_100%)]"></div>
+        <div class="relative grid gap-8">
+          <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <p class="text-sm uppercase tracking-[0.24em] text-slate-400">Estado</p>
+              <h2 id="statusText" class="mt-3 text-3xl font-semibold text-white sm:text-4xl">Esperando instrucciones</h2>
+            </div>
+            <span class="inline-flex rounded-full bg-sky-500/15 px-4 py-2 text-sm font-semibold text-sky-200 ring-1 ring-sky-400/20">Listo</span>
+          </div>
+          <p class="max-w-2xl text-slate-300">BMO vigila tu progreso y mantiene los comandos más importantes a un solo toque. Esta página es tu tablero de control.</p>
+          <div class="relative overflow-hidden rounded-[1.75rem] border border-slate-800/80 bg-slate-900/95 p-8">
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,.12),_transparent_32%),linear-gradient(180deg,rgba(15,23,42,.98)_0%,#0F172A_100%)]"></div>
+            <div class="relative grid place-items-center">
+              <div class="relative flex flex-col items-center gap-5">
+                <div class="flex items-center gap-4">
+                  <span class="h-4 w-4 rounded-full bg-sky-300 shadow-[0_0_18px_rgba(56,189,248,0.55)]"></span>
+                  <span class="h-4 w-4 rounded-full bg-sky-300 shadow-[0_0_18px_rgba(56,189,248,0.55)]"></span>
+                </div>
+                <div class="h-4 w-24 rounded-full bg-sky-300 shadow-[0_0_24px_rgba(56,189,248,0.35)]"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
 
-<section class="w-full flex flex-col items-center mb-16">
+      <div class="grid gap-4">
+        <button id="btnEstudio" class="group rounded-[1.75rem] border border-slate-200 bg-gradient-to-br from-amber-100 via-amber-50 to-white px-6 py-5 text-left shadow-lg shadow-amber-200/40 transition duration-200 hover:-translate-y-0.5 hover:shadow-2xl">
+          <div class="flex items-center justify-between gap-4">
+            <div class="inline-flex h-14 w-14 items-center justify-center rounded-3xl bg-amber-400 text-2xl shadow-[0_16px_38px_rgba(245,158,11,0.22)]">📚</div>
+            <span class="rounded-full bg-slate-950 px-3 py-1 text-sm font-semibold text-white/90">Foco</span>
+          </div>
+          <div class="mt-4">
+            <h3 class="text-xl font-semibold text-slate-950">Iniciar Estudio</h3>
+            <p class="mt-2 text-slate-600">Comienza una sesión de trabajo con apoyo visual.</p>
+          </div>
+        </button>
+        <button id="btnGym" class="group rounded-[1.75rem] border border-slate-200 bg-gradient-to-br from-emerald-100 via-emerald-50 to-white px-6 py-5 text-left shadow-lg shadow-emerald-200/40 transition duration-200 hover:-translate-y-0.5 hover:shadow-2xl">
+          <div class="flex items-center justify-between gap-4">
+            <div class="inline-flex h-14 w-14 items-center justify-center rounded-3xl bg-emerald-500 text-2xl text-white shadow-[0_16px_38px_rgba(16,185,129,0.22)]">🏋️</div>
+            <span class="rounded-full bg-slate-950 px-3 py-1 text-sm font-semibold text-white/90">Energía</span>
+          </div>
+          <div class="mt-4">
+            <h3 class="text-xl font-semibold text-slate-950">Preparar Gym</h3>
+            <p class="mt-2 text-slate-600">Activa una rutina breve para despejar la mente.</p>
+          </div>
+        </button>
+        <button id="btnReset" class="group rounded-[1.75rem] border border-slate-200 bg-gradient-to-br from-slate-100 via-slate-50 to-white px-6 py-5 text-left shadow-lg shadow-slate-200/40 transition duration-200 hover:-translate-y-0.5 hover:shadow-2xl">
+          <div class="flex items-center justify-between gap-4">
+            <div class="inline-flex h-14 w-14 items-center justify-center rounded-3xl bg-slate-900 text-2xl text-white shadow-[0_16px_38px_rgba(15,23,42,0.18)]">↺</div>
+            <span class="rounded-full bg-slate-950 px-3 py-1 text-sm font-semibold text-white/90">Reiniciar</span>
+          </div>
+          <div class="mt-4">
+            <h3 class="text-xl font-semibold text-slate-950">Resetear</h3>
+            <p class="mt-2 text-slate-600">Reinicia el estado actual y vuelve a empezar.</p>
+          </div>
+        </button>
+      </div>
+    </section>
 
-<div class="relative w-full aspect-[4/3] max-w-md pixel-monitor rounded-[2.5rem] p-8 border-4 border-slate-700 flex items-center justify-center overflow-hidden">
-
-<div class="scanline"></div>
-
-<div class="flex flex-col items-center bmo-face-pulse">
-
-<div class="flex gap-12 mb-6">
-<div class="w-6 h-6 bg-emerald-300 rounded-full"></div>
-<div class="w-6 h-6 bg-emerald-300 rounded-full"></div>
-</div>
-
-<div id="bmoMouth" class="w-24 h-4 bg-emerald-300 rounded-full"></div>
-
-</div>
-</div>
-
-<div class="mt-8 text-center">
-
-<p class="uppercase tracking-widest text-blue-700 text-xs mb-2">
-Estado Actual
-</p>
-
-<h2 id="statusText" class="text-4xl font-bold">
-Esperando instrucciones
-</h2>
-
-<p class="text-slate-500 mt-4 max-w-md">
-BMO está listo para ayudarte.
-</p>
-
-<div id="statusBox" class="hidden"></div>
-
-</div>
-
-</section>
-
-<section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-
-<button id="btnEstudio" class="group p-8 glass-card rounded-3xl text-left transition hover:shadow-xl hover:-translate-y-1">
-
-<div class="w-14 h-14 rounded-xl bg-blue-600 flex items-center justify-center text-white mb-4">
-⏱
-</div>
-
-<h3 class="text-2xl font-bold text-blue-700">
-Iniciar Estudio
-</h3>
-
-<p class="text-slate-500 mt-2">
-Activa la sesión de estudio.
-</p>
-
-</button>
-
-<button id="btnGym" class="group p-8 glass-card rounded-3xl text-left transition hover:shadow-xl hover:-translate-y-1">
-
-<div class="w-14 h-14 rounded-xl bg-emerald-600 flex items-center justify-center text-white mb-4">
-◆
-</div>
-
-<h3 class="text-2xl font-bold text-emerald-700">
-Preparar Gym
-</h3>
-
-<p class="text-slate-500 mt-2">
-Activa la rutina física.
-</p>
-
-</button>
-
-<button id="btnReset" class="group p-8 glass-card rounded-3xl text-left transition hover:shadow-xl hover:-translate-y-1">
-
-<div class="w-14 h-14 rounded-xl bg-slate-200 flex items-center justify-center mb-4">
-↺
-</div>
-
-<h3 class="text-2xl font-bold">
-Resetear Tareas
-</h3>
-
-<p class="text-slate-500 mt-2">
-Limpia el estado actual.
-</p>
-
-</button>
-
-</section>
-
-<section class="glass-card rounded-[2rem] p-8">
-
-<h3 class="text-2xl font-bold mb-6">
-Registros Recientes
-</h3>
-
-<div id="logArea" class="space-y-3">
-</div>
-
-</section>
-
-</main>
+    <section class="mt-6 rounded-[2rem] bg-white border border-slate-200 p-6 shadow-[0_20px_50px_rgba(15,23,42,0.08)]">
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h2 class="text-2xl font-semibold text-slate-950">Actividad reciente</h2>
+          <p class="mt-2 text-slate-600">Consulta los eventos del sistema sin distraerte de lo esencial.</p>
+        </div>
+        <span class="inline-flex rounded-full bg-sky-100 px-4 py-2 text-sm font-semibold text-sky-700">¡Listo!</span>
+      </div>
+      <div id="logArea" class="mt-6 grid gap-4"></div>
+    </section>
+  </main>
 
 <script>
 const firebaseConfig = {
@@ -174,11 +137,17 @@ const tareasRef = database.ref('/tareas');
 const estadoRef = database.ref('/tareas/estudio');
 
 function agregarLog(mensaje,tipo='info'){
-const log=document.getElementById('logArea');
-const div=document.createElement('div');
-div.className='flex items-center gap-4 p-4 rounded-xl bg-white';
-div.innerHTML='<div class="flex-1">'+mensaje+'</div><div>'+new Date().toLocaleTimeString()+'</div>';
-log.prepend(div);
+  const log=document.getElementById('logArea');
+  const entry=document.createElement('div');
+  entry.className='rounded-[1.75rem] border border-slate-200 bg-slate-50/95 p-4 shadow-sm text-slate-800';
+  const content=document.createElement('div');
+  content.textContent=mensaje;
+  const hora=document.createElement('time');
+  hora.className='mt-2 block text-sm text-slate-500';
+  hora.textContent=new Date().toLocaleTimeString();
+  entry.appendChild(content);
+  entry.appendChild(hora);
+  log.prepend(entry);
 }
 
 function actualizarEstado(texto){
